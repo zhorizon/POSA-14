@@ -57,7 +57,7 @@ public class PingPongRight {
          * two data members.
          */
         // TODO - You fill in here.
-        SimpleSemaphore mSemaphores[];
+        private final SimpleSemaphore mSemaphores[];
 
         /**
          * Constructor initializes the data member(s).
@@ -84,12 +84,15 @@ public class PingPongRight {
              */
 
             // TODO - You fill in here.
-        	for (int i = 1; i <= mMaxLoopIterations; i++) {
-	        	acquire();
-	        	System.out.println(mStringToPrint + "(" + i + ")");
-	        	release();
-        	}
-        	mLatch.countDown();
+        	try {
+	        	for (int i = 1; i <= mMaxLoopIterations; i++) {
+		        	acquire();
+		        	System.out.println(mStringToPrint + "(" + i + ")");
+		        	release();
+	        	}
+        	} finally {
+	        	mLatch.countDown();
+	        }
         }
 
         /**
@@ -97,11 +100,7 @@ public class PingPongRight {
          */
         private void acquire() {
             // TODO fill in here
-        	try {
-				mSemaphores[FIRST_SEMA].acquire();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+        	mSemaphores[FIRST_SEMA].acquireUninterruptibly();
         }
 
         /**
@@ -150,7 +149,6 @@ public class PingPongRight {
         // synchronizer call to mLatch that waits for both threads to
         // finish.
         mLatch.await();
-//        throw new java.lang.InterruptedException();
 
         System.out.println(finishString);
     }
@@ -168,4 +166,3 @@ public class PingPongRight {
                 mMaxIterations);
     }
 }
-
