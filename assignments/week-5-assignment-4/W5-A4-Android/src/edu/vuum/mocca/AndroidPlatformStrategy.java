@@ -59,6 +59,16 @@ public class AndroidPlatformStrategy extends PlatformStrategy
          * and appends the outputString to a TextView. 
          */
         // TODO - You fill in here.
+//    	Looper.prepare();
+//    	
+//    	mTextViewOutput.getHandler().post(new Runnable() {
+//    		public void run() {
+//    			mTextViewOutput.append(outputString + "\n");
+//    		}
+//    	});
+//    	
+//    	Looper.loop();
+    	
     	mTextViewOutput.post(new Runnable() {
     		public void run() {
     			mTextViewOutput.append(outputString + "\n");
